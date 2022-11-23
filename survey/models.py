@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
-     user = models.OneToOneField(User, on_delete=models.CASCADE)
+     first_name = models.CharField(max_length=12,null=True) 
      GENDER_CHOICES=(
       ("M","Male"),
        ("F","Female"),
@@ -20,19 +20,21 @@ class Profile(models.Model):
 
 
      def __str__(self):
-            return str(self.user)
+            return str(self.first_name)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.first_name()
+
+
+
 
 class Question(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.CharField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
 
@@ -40,33 +42,31 @@ class Question(models.Model):
         return self.question
 
 
-class Choice(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-    
 
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    CHOICE_CHOICES=(
+      ("Y","Yes"),
+      ("N","No"),
+
+     )
+    choice=models.CharField(max_length=5,choices=CHOICE_CHOICES)
+    
     def __str__(self):
-        return f"{self.question}-{self.user}-{self.choice}"
+        return f"{self.question}-{self.question}-{self.choice}"
 
 
 
 class Feedback(models.Model):
-    username = models.CharField(max_length=255)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created     = models.DateTimeField(default=timezone.now)
+    text = models.TextField(max_length=200,blank=False,null=False)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('text',)
    
     def __str__(self):
-        return self.title
-
-class FeedbackComment(models.Model):
-    forum = models.ForeignKey(Feedback, on_delete=models.CASCADE)
-    comment = models.TextField()
+        return self.text
 
 
    
