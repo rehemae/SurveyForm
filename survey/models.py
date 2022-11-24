@@ -60,6 +60,7 @@ class Choice(models.Model):
 
 
 class Feedback(models.Model):
+    
     text = models.TextField(max_length=200,blank=False,null=False)
 
     class Meta:
