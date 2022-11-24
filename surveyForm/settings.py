@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'survey',
     'drf_yasg',
+    'api',
     'rest_framework',
     'rest_framework_simplejwt',
 
