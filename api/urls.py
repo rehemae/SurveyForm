@@ -10,5 +10,5 @@ router.register(r"survey", SurveyViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("survey/", SurveyViewSet.as_view(), name="deposit-view"),
+    path("survey/", SurveyViewSet.as_view({'get': 'list'}), name="survey-view"),
 ]

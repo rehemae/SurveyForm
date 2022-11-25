@@ -24,7 +24,7 @@ class Survey(models.Model):
 
      )
      satisfied=models.CharField(max_length=5,choices=SATISFIED_CHOICES)
-     feedback=models.CharField(max_length=95,null=True)
+     feedback=models.CharField(max_length=200,null=True)
     
 
 

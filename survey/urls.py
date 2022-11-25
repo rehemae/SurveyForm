@@ -1,6 +1,9 @@
-from django.urls import path
-from .views import register_survey
+from django.urls import include, path
+
+from survey import admin
+
 urlpatterns = [
     # Constracting routing configuration
-    path('register/', register_survey, name='registration'),
-]
+  path('admin/', admin.site.urls),
+  path('api/',include('api.urls')),]
+
